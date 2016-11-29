@@ -7,6 +7,7 @@
  */
 static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 static int borderpx = 2;
+#define histsize 2000
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -138,10 +139,13 @@ static unsigned int mousefg = 7;
 static unsigned int mousebg = 0;
 
 /*
- * Color used to display font attributes when fontconfig selected a font which
- * doesn't match the ones requested.
+ * Colors used, when the specific fg == defaultfg. So in reverse mode this
+ * will reverse too. Another logic would only make the simple feature too
+ * complex.
  */
 static unsigned int defaultattr = 11;
+static unsigned int defaultitalic = 11;
+static unsigned int defaultunderline = 7;
 
 /*
  * Internal mouse shortcuts.
@@ -171,6 +175,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
 	{ MODKEY,               XK_Num_Lock,    numlock,        {.i =  0} },
 	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*
@@ -284,7 +290,6 @@ static Key key[] = {
 	{ XK_Up,         ShiftMask|Mod1Mask,"\033[1;4A",     0,    0,    0},
 	{ XK_Up,            ControlMask,    "\033[1;5A",     0,    0,    0},
 	{ XK_Up,      ShiftMask|ControlMask,"\033[1;6A",     0,    0,    0},
-	{ XK_Up,       ControlMask|Mod1Mask,"\033[1;7A",     0,    0,    0},
 	{ XK_Up,ShiftMask|ControlMask|Mod1Mask,"\033[1;8A",  0,    0,    0},
 	{ XK_Up,            XK_ANY_MOD,     "\033[A",        0,   -1,    0},
 	{ XK_Up,            XK_ANY_MOD,     "\033OA",        0,   +1,    0},
@@ -293,7 +298,6 @@ static Key key[] = {
 	{ XK_Down,       ShiftMask|Mod1Mask,"\033[1;4B",     0,    0,    0},
 	{ XK_Down,          ControlMask,    "\033[1;5B",     0,    0,    0},
 	{ XK_Down,    ShiftMask|ControlMask,"\033[1;6B",     0,    0,    0},
-	{ XK_Down,     ControlMask|Mod1Mask,"\033[1;7B",     0,    0,    0},
 	{ XK_Down,ShiftMask|ControlMask|Mod1Mask,"\033[1;8B",0,    0,    0},
 	{ XK_Down,          XK_ANY_MOD,     "\033[B",        0,   -1,    0},
 	{ XK_Down,          XK_ANY_MOD,     "\033OB",        0,   +1,    0},
@@ -302,7 +306,6 @@ static Key key[] = {
 	{ XK_Left,       ShiftMask|Mod1Mask,"\033[1;4D",     0,    0,    0},
 	{ XK_Left,          ControlMask,    "\033[1;5D",     0,    0,    0},
 	{ XK_Left,    ShiftMask|ControlMask,"\033[1;6D",     0,    0,    0},
-	{ XK_Left,     ControlMask|Mod1Mask,"\033[1;7D",     0,    0,    0},
 	{ XK_Left,ShiftMask|ControlMask|Mod1Mask,"\033[1;8D",0,    0,    0},
 	{ XK_Left,          XK_ANY_MOD,     "\033[D",        0,   -1,    0},
 	{ XK_Left,          XK_ANY_MOD,     "\033OD",        0,   +1,    0},
@@ -311,7 +314,6 @@ static Key key[] = {
 	{ XK_Right,      ShiftMask|Mod1Mask,"\033[1;4C",     0,    0,    0},
 	{ XK_Right,         ControlMask,    "\033[1;5C",     0,    0,    0},
 	{ XK_Right,   ShiftMask|ControlMask,"\033[1;6C",     0,    0,    0},
-	{ XK_Right,    ControlMask|Mod1Mask,"\033[1;7C",     0,    0,    0},
 	{ XK_Right,ShiftMask|ControlMask|Mod1Mask,"\033[1;8C",0,   0,    0},
 	{ XK_Right,         XK_ANY_MOD,     "\033[C",        0,   -1,    0},
 	{ XK_Right,         XK_ANY_MOD,     "\033OC",        0,   +1,    0},

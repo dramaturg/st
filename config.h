@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char font[] = "PragmataPro:pixelsize=14:antialias=true:autohint=true";
+
 static int borderpx = 2;
 #define histsize 2000
 
@@ -64,7 +65,7 @@ static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 /* default TERM value */
-static char termname[] = "st-256color";
+static char termname[] = "xterm-256color";
 
 /*
  * spaces per tab
@@ -86,7 +87,7 @@ static unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* solarized dark */
-	"#073642",  /*  0: black    */
+	"#282828",  /*  0: black    */
 	"#dc322f",  /*  1: red      */
 	"#859900",  /*  2: green    */
 	"#b58900",  /*  3: yellow   */
@@ -94,7 +95,7 @@ static const char *colorname[] = {
 	"#d33682",  /*  5: magenta  */
 	"#2aa198",  /*  6: cyan     */
 	"#eee8d5",  /*  7: white    */
-	"#002b36",  /*  8: brblack  */
+	"#282828",  /*  8: brblack  */
 	"#cb4b16",  /*  9: brred    */
 	"#586e75",  /* 10: brgreen  */
 	"#657b83",  /* 11: bryellow */
@@ -114,7 +115,7 @@ static const char *altcolorname[] = {
 	"#268bd2",  /*  4: blue     */
 	"#d33682",  /*  5: magenta  */
 	"#2aa198",  /*  6: cyan     */
-	"#073642",  /*  7: white    */
+	"#000000",  /*  7: white    */
 	"#fdf6e3",  /*  8: brblack  */
 	"#cb4b16",  /*  9: brred    */
 	"#93a1a1",  /* 10: brgreen  */
@@ -122,7 +123,7 @@ static const char *altcolorname[] = {
 	"#657b83",  /* 12: brblue   */
 	"#6c71c4",  /* 13: brmagenta*/
 	"#586e75",  /* 14: brcyan   */
-	"#002b36",  /* 15: brwhite  */
+	"#000000",  /* 15: brwhite  */
 };
 
 /*
@@ -196,6 +197,7 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ XK_ANY_MOD,           XK_F6,          swapcolors,     {.i =  0} },
+	{ MODKEY, 'u', externalpipe, { .v = "xurls | dmenu -l 10 | xargs -r open" } },
 };
 
 /*
